@@ -1,0 +1,301 @@
+四则运算：
+
+现在需要你实现一个能包含加、减、乘、除，能处理括号运算的计算器，请描述你的实现思路，必要时可使用流程图、UML图或者伪代码。
+
+----------------------------------------------------------------
+
+从别处拷来的代码，但是可以运行，我自己也吃透了，所以分享出来。先来点基础知识回顾。
+
+前缀表达式：
+
+前缀表达式就是不含括号的算术表达式，而且它是将运算符写在前面，操作数写在后面的表达式，为纪念其发明者波兰数学家Jan Lukasiewicz也称为“波兰式”。例如，- 1 + 2 3，它等价于1-(2+3)。
+
+前缀表达式是一种十分有用的表达式，它将中缀表达式转换为可以依靠简单的操作就能得到运算结果的表达式。例如，(a+b)*(c+d)转换为*,+,a,b,+,c,d。它的优势在于只用两种简单的操作，入栈和出栈就可以解决任何中缀表达式的运算。其运算方式为：如果当前字符(或字符串)为数字或变量，则压入栈内；如果是运算符，则将栈顶两个元素弹出栈外并作相应运算，再将结果压入栈内。当前缀表达式扫描结束时，栈里的就是中缀表达式运算的最终结果。
+
+中缀表达式转换为前缀表达式的一些例子　　a+b ---> +,a,b　
+
+　　a+(b-c) ---> +,a,-,b,c　
+
+　　a+(b-c)*d ---> +,a,*,-,b,c,d　
+
+　　a=1+3 ---> a=+,1,3
+
+中缀表达式：
+
+中缀表达式（或中缀记法）是一个通用的算术或逻辑公式表示方法， 操作符是以中缀形式处于操作数的中间（例：3 + 4），中缀表达式是人们常用的算术表示方法。
+
+　　与前缀表达式（例：+ 3 4）或后缀表达式（例：3 4 +）相比，中缀表达式不容易被计算机解析，但仍被许多程序语言使用，因为它符合人们的普遍用法。
+
+　　与前缀或后缀记法不同的是，中缀记法中括号是必需的。计算过程中必须用括号将操作符和对应的操作数括起来，用于指示运算的次序。
+
+　　例：
+
+　　（1）8+4-6*2用后缀表达式表示为：
+
+　　84+62*-
+
+　　（2）2*（3+5）-4+7/1用后缀表达式表示为：
+
+　　35+2*4-71/+
+
+后缀表达式：
+
+不包含括号，运算符放在两个运算对象的后面，所有的计算按运算符出现的顺序，严格从左向右进行（不再考虑运算符的优先规则，如：(2 + 1) * 3 ， 即2 1 + 3 *
+
+计算机实现转换：
+　　将中缀表达式转换为后缀表达式的算法思想：
+　　·开始扫描；
+　　·数字时，加入后缀表达式；
+　　·运算符：
+　　a. 若为 '('，入栈；
+　　b. 若为 ')'，则依次把栈中的的运算符加入后缀表达式中，直到出现'('，从栈中删除'(' ；
+　　c.剩下的运算符中， 若其优先级高于其它所有的运算符，直接入栈。否则从栈顶开始，依次弹出比当前处理的运算符优先级高和优先级相等的运算符，直到一个比它优先级低的或者遇到了一个左括号就停止。
+　　·当扫描的中缀表达式结束时，栈中的的所有运算符出栈；　
+　　人工实现转换
+　　这里我给出一个中缀表达式：a+b*c-(d+e)
+　　第一步：按照运算符的优先级对所有的运算单位加括号：式子变成了：((a+(b*c))-(d+e))
+　　第二步：转换前缀与后缀表达式
+　　前缀：把运算符号移动到对应的括号前面
+　　则变成了：-( +(a *(bc)) +(de))
+　　把括号去掉：-+a*bc+de 前缀式子出现
+　　后缀：把运算符号移动到对应的括号后面
+　　则变成了：((a(bc)* )+ (de)+ )-
+　　把括号去掉：abc*+de+- 后缀式子出现
+
+-------------------------------------------------
+
+计算器参考实现(转载)
+
+执行时一定要带全括号：例如，（2+（7*（4+5）））；如果输入2+7*（4+5）可能得不到正确的结果。仅仅做参考！！！！
+
+#include <iostream>
+#include <string>
+using namespace std;
+//定义数据栈和符号栈
+typedef struct NumStack
+{
+double num;
+NumStack *next;
+
+}NumStack;
+typedef struct SymStack{
+ char sym;
+ SymStack *next;
+}SymStack;
+NumStack NS, *np = NULL;
+SymStack SS, *sp = NULL;
+//栈初始化
+void init_Stack()
+{
+ NumStack *t1, *tt1;
+ for(t1 = np; t1; t1 = tt1) {tt1 = t1->next; delete t1;}
+ np = NULL;
+ SymStack *t2, *tt2;
+ for(t2 = sp; t2; t2 = tt2) {tt2 = t2->next; delete t2;}
+ sp = NULL;
+}
+//判断栈空
+bool empty_NS()
+{
+ if(np) return(false);
+
+ else return(true);
+}
+bool empty_SS()
+{
+ if(sp) return(false);
+ else return(true);
+}
+//压栈
+void push_NS(double x)
+{
+ NumStack *t;
+ if (!(t = new NumStack)) {cout<<"\n数据栈新空间分配失败!\n"<<endl; exit(1);}
+ t->num = x;
+ t->next = np;
+ np = t;
+}
+void push_SS(char x)
+{
+ SymStack *t;
+ if (!(t = new SymStack)) {cout<<"\n符号栈新空间分配失败!\n"<<endl; exit(1);}
+ t->sym = x;
+
+ t->next = sp;
+ sp = t;
+}
+//出栈
+float pop_NS()
+{
+ if (empty_NS()) {cout<<"\n数据栈下溢!\n"<<endl; exit(1);}
+ NumStack *t = np;
+ float x = t->num;
+ np = t->next;
+ delete t;
+ return x;
+}
+char pop_SS()
+{
+ if (empty_SS()) {cout<<"\n符号栈下溢!\n"<<endl; exit(1);}
+ SymStack *t = sp;
+ char x = t->sym;
+ sp = t->next;
+ delete t;
+ return x;
+}
+
+//读栈顶元素
+char top_SS()
+{
+ if (empty_SS()) {cout<<"\n符号栈空!\n"<<endl; exit(1);}
+ return(sp->sym);
+}
+double top_NS()
+{
+ if (empty_NS()) {cout<<"\n数据栈空!\n"<<endl; exit(1);}
+ return(np->num);
+}
+//判断栈长
+int len_NS()
+{
+ int l=0;
+ NumStack *t;
+ t=np;
+ while(t)
+ {
+  l++;
+  t=t->next;
+ }
+
+ return(l);
+}
+//符号级别判定
+int s_lv(char x)
+{
+ switch(x)
+ {
+ case '+':
+ case '-': return(1); break;
+ case '*':
+ case '/': return(2); break;
+ }
+ cout<<"\n有无法判级的符号!\n"<<endl;
+ exit(1);
+}
+//加减乘除处理
+void calc()
+{
+ char tc;
+ double n1, n2, n3;
+ tc = pop_SS();
+ n2 = pop_NS();
+ n1 = pop_NS();
+ switch(tc)
+
+ {
+ case '+': n3 = n1 + n2; break;
+ case '-': n3 = n1 - n2; break;
+ case '*': n3 = n1 * n2; break;
+ case '/':
+  if(n2==0)
+  {
+   cout<<"\n出现除0的情况!\n"<<endl;
+   exit(1);
+  }
+  else
+  {
+   n3 = n1 / n2;
+   break;
+  }
+ }
+ push_NS(n3);
+}
+//表达式运算
+double exp_calc(string s)
+{
+ char p = s[0];
+ int i=0, j, l;
+ string t;
+
+ double x;
+ char *c;
+ bool point;
+ while (p)
+ {
+  //数字或小数点处理
+  if((p>=48 && p<=57) || p=='.')
+  {
+   //数据提取部分
+   if(p=='.') {t="0."; l=2; point=true;}
+   else {t=p; l=1; point=false;}
+   p = s[++i];
+   while(p && ((p>=48 && p<=57) || p=='.'))
+   {
+    if((p=='.') && (point)) {cout<<"\n表达式数据出错!\n"<<endl; exit(1);}
+    else if(p=='.') point=true;
+    l++;
+    t=t+p;
+    p = s[++i];
+   }
+   p = s[--i];
+   c=new char[l+1];
+   for(j=0; j<l; j++) c[j] = t[j];
+
+   c[j] = '\0';
+   x = atof(c);
+   delete c;
+   //数据提取部分结束，压栈
+   push_NS(x);
+  }
+  //加减乘除符号处理
+  else if(p=='+' || p=='-' || p=='*' || p=='/')
+  {
+   if (empty_SS()) push_SS(p);
+   else
+   {
+    while(!empty_SS() && (top_SS()!='(') && (s_lv(p)<=s_lv(top_SS())))
+     calc();
+    push_SS(p);
+   }
+  }
+  //左括号处理
+  else if(p=='(') push_SS(p);
+  //右括号处理
+  else if(p==')')
+  {
+
+   while (top_SS()!='(')
+    calc();
+   pop_SS();
+  }
+  //出现非法符号
+  else
+  {
+   cout<<"\n表达式使用了非法字符!\n"<<endl;
+   exit(1);
+  }
+  //读下个字符
+  p = s[++i];
+ }
+ //栈中剩余数据处理
+ while(!empty_SS())
+  calc();
+ if(len_NS()!=1)
+ {
+  cout<<"\n表达式有误!\n"<<endl;
+  exit(1);
+ }
+ return (top_NS());
+}
+
+int main()
+{
+ init_Stack();
+ string s;
+ double x;
+ cout<<"输入表达式(可使用 + - * / 和 小括号, 暂不支持负数): \n";
+ cin>>s;
+ x = exp_calc(s);
+ cout<<"\n表达式的值为: \n"<<x<<"\n"<<endl;
+ return(0);
+}

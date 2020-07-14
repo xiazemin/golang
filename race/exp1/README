@@ -1,0 +1,21 @@
+localhost:exp1 didi$ go run race.go -race
+localhost:exp1 didi$ go run -race race.go
+==================
+WARNING: DATA RACE
+Write at 0x00c0000a4000 by goroutine 7:
+  main.main.func2()
+      /Users/didi/goLang/src/github.com/xiazemin/race/exp1/race.go:15 +0x38
+
+Previous write at 0x00c0000a4000 by goroutine 6:
+  main.main.func1()
+      /Users/didi/goLang/src/github.com/xiazemin/race/exp1/race.go:9 +0x38
+
+Goroutine 7 (running) created at:
+  main.main()
+      /Users/didi/goLang/src/github.com/xiazemin/race/exp1/race.go:13 +0x9c
+
+Goroutine 6 (running) created at:
+  main.main()
+      /Users/didi/goLang/src/github.com/xiazemin/race/exp1/race.go:7 +0x7a
+==================
+

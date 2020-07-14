@@ -1,0 +1,41 @@
+#0  github.com/go-martini/martini.(*routeContext).run (r=0xc4201184b0) at /Users/didi/goLang/src/github.com/go-martini/martini/router.go:418
+#1  0x00000000012a1460 in github.com/go-martini/martini.(*route).Handle (r=0xc420080320, c=..., res=...) at /Users/didi/goLang/src/github.com/go-martini/martini/router.go:285
+#2  0x000000000129fb88 in github.com/go-martini/martini.(*router).Handle (r=0xc42006a240, res=..., req=0xc420126000, context=...)
+    at /Users/didi/goLang/src/github.com/go-martini/martini/router.go:132
+#3  0x00000000012a6a7b in github.com/go-martini/martini.(Router).Handle-fm (a0=..., a1=0xc420126000, a2=...)
+    at /Users/didi/goLang/src/github.com/go-martini/martini/martini.go:125
+#4  0x000000000105639b in runtime.call64 () at /usr/local/go/src/runtime/asm_amd64.s:510
+#5  0x00000000010a6e15 in reflect.Value.call (v=..., op="Call", in= []reflect.Value = {...}, ~r2= []reflect.Value = {...}) at /usr/local/go/src/reflect/value.go:434
+#6  0x00000000010a63f4 in reflect.Value.Call (v=..., in= []reflect.Value = {...}, ~r1= []reflect.Value) at /usr/local/go/src/reflect/value.go:302
+#7  0x0000000001278398 in github.com/codegangsta/inject.(*injector).Invoke (inj=0xc42013c000, f=..., ~r1= []reflect.Value, ~r2=...)
+    at /Users/didi/goLang/src/github.com/codegangsta/inject/inject.go:102
+#8  0x000000000129d054 in github.com/go-martini/martini.(*context).run (c=0xc42013e050) at /Users/didi/goLang/src/github.com/go-martini/martini/martini.go:179
+---Type <return> to continue, or q <return> to quit---
+#9  0x000000000129cf09 in github.com/go-martini/martini.(*context).Next (c=0xc42013e050) at /Users/didi/goLang/src/github.com/go-martini/martini/martini.go:170
+#10 0x00000000012a3c9d in github.com/go-martini/martini.Recovery.func1 (c=..., log=0xc4200802d0) at /Users/didi/goLang/src/github.com/go-martini/martini/recovery.go:142
+#11 0x000000000105631b in runtime.call32 () at /usr/local/go/src/runtime/asm_amd64.s:509
+#12 0x00000000010a6e15 in reflect.Value.call (v=..., op="Call", in= []reflect.Value = {...}, ~r2= []reflect.Value = {...}) at /usr/local/go/src/reflect/value.go:434
+#13 0x00000000010a63f4 in reflect.Value.Call (v=..., in= []reflect.Value = {...}, ~r1= []reflect.Value) at /usr/local/go/src/reflect/value.go:302
+#14 0x0000000001278398 in github.com/codegangsta/inject.(*injector).Invoke (inj=0xc42013c000, f=..., ~r1= []reflect.Value, ~r2=...)
+    at /Users/didi/goLang/src/github.com/codegangsta/inject/inject.go:102
+#15 0x000000000129d054 in github.com/go-martini/martini.(*context).run (c=0xc42013e050) at /Users/didi/goLang/src/github.com/go-martini/martini/martini.go:179
+#16 0x000000000129cf09 in github.com/go-martini/martini.(*context).Next (c=0xc42013e050) at /Users/didi/goLang/src/github.com/go-martini/martini/martini.go:170
+#17 0x00000000012a3101 in github.com/go-martini/martini.Logger.func1 (res=..., req=0xc420126000, c=..., log=0xc4200802d0)
+    at /Users/didi/goLang/src/github.com/go-martini/martini/logger.go:25
+#18 0x000000000105639b in runtime.call64 () at /usr/local/go/src/runtime/asm_amd64.s:510
+---Type <return> to continue, or q <return> to quit---
+#19 0x00000000010a6e15 in reflect.Value.call (v=..., op="Call", in= []reflect.Value = {...}, ~r2= []reflect.Value = {...}) at /usr/local/go/src/reflect/value.go:434
+#20 0x00000000010a63f4 in reflect.Value.Call (v=..., in= []reflect.Value = {...}, ~r1= []reflect.Value = {...}) at /usr/local/go/src/reflect/value.go:302
+#21 0x0000000001278398 in github.com/codegangsta/inject.(*injector).Invoke (inj=0xc42013c000, f=..., ~r1= []reflect.Value, ~r2=...)
+    at /Users/didi/goLang/src/github.com/codegangsta/inject/inject.go:102
+#22 0x000000000129d054 in github.com/go-martini/martini.(*context).run (c=0xc42013e050) at /Users/didi/goLang/src/github.com/go-martini/martini/martini.go:179
+#23 0x000000000129c14c in github.com/go-martini/martini.(*Martini).ServeHTTP (m=0xc42005a240, res=..., req=0xc420126000)
+    at /Users/didi/goLang/src/github.com/go-martini/martini/martini.go:75
+#24 0x00000000012510c4 in net/http.serverHandler.ServeHTTP (sh=..., rw=..., req=0xc420126000) at /usr/local/go/src/net/http/server.go:2619
+#25 0x000000000124d44d in net/http.(*conn).serve (c=0xc420084d20, ctx=...) at /usr/local/go/src/net/http/server.go:1801
+#26 0x0000000001058b61 in runtime.goexit () at /usr/local/go/src/runtime/asm_amd64.s:2337
+#27 0x000000c420084d20 in ?? ()
+#28 0x00000000014d9e80 in crypto/elliptic.p224ZeroModP63 ()
+---Type <return> to continue, or q <return> to quit---
+#29 0x000000c42011a040 in ?? ()
+#30 0x0000000000000000 in ?? ()

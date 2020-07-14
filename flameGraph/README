@@ -1,0 +1,46 @@
+安装go-torch
+go get github.com/uber/go-torch
+安装 FlameGraph
+cd $WORK_PATH && git clone https://github.com/brendangregg/FlameGraph.git
+export PATH=$PATH:$WORK_PATH/FlameGraph-master
+安装graphviz
+yum install graphviz(CentOS, Redhat)
+go-torch -u http://localhost:8888/debug/pprof/ -p > profile-local.sv
+
+INFO[20:42:18] Run pprof command: go tool pprof -raw -seconds 30 http://localhost:8888/debug/pprof/profile
+ERROR: No stack counts found
+FATAL[20:42:48] Failed: could not generate flame graph: exit status 2
+
+
+go-torch -u http://localhost:8888/debug/pprof/heap -p > heap-local.svg
+INFO[20:43:44] Run pprof command: go tool pprof -raw -seconds 30 http://localhost:8888/debug/pprof/profile
+ERROR: No stack counts found
+FATAL[20:44:14] Failed: could not generate flame graph: exit status 2
+
+
+git clone https://github.com/gperftools/gperftools
+
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null
+
+
+brew install google-perftools
+
+
+ perf record -F 99 -a -g -- sleep 30
+ brew install perf
+ cd goLang/
+ git clone https://github.com/gperftools/gperftools
+ cd gperftools/
+ ./autogen.sh
+ ./configure --prefix=<build_path>
+ ./configure --prefix=~/goLang/
+ pwd
+ ./configure --prefix=/Users/didi/goLang/bin
+ make
+   make install
+ history 10
+ history 15
+
+  go-torch -inuse_space http://127.0.0.1:8888/debug/pprof/heap --colors=mem
+
+  go-torch -alloc_space http://127.0.0.1:8888/debug/pprof/heap --colors=mem

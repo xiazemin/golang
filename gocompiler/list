@@ -1,0 +1,10 @@
+go list -json  std  >go.json
+
+go list
+
+　　不加任何标记直接使用，是显示指定包的导入路径，如 go list net/http 就显示 net/http。
+
+　　该命令加上 -json 标记可以显示完整信息，
+
+　如果只想显示指定信息，可以使用 -f 标记，如 go list -f {{.GoFiles}} net/http 可以显示 net/http 包中的 GO 源码文件列表。（所以可以理解，默认的 go list 相当于 go list -f {{.ImportPath}}）
+

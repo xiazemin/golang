@@ -1,0 +1,13 @@
+$ bee dockerize -image="library/golang:1.6.4" -expose=9000
+______
+| ___ \
+| |_/ /  ___   ___
+| ___ \ / _ \ / _ \
+| |_/ /|  __/|  __/
+\____/  \___| \___| v1.10.0
+2019/06/27 15:14:49 INFO     ▶ 0001 Generating Dockerfile...
+2019/06/27 15:14:49 SUCCESS  ▶ 0002 Dockerfile generated.
+
+
+ bee new myproject
+ bee api apiproject

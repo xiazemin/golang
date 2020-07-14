@@ -1,0 +1,94 @@
+(gdb) info symbol 0x1054b30
+_rt0_amd64_darwin in section .text
+(gdb) b *0x1054b30
+Breakpoint 1 at 0x1054b30
+(gdb) r
+Starting program: /Users/didi/goLang/src/github.com/xiazemin/race/bootstrap/m
+
+Breakpoint 1, 0x0000000001054b30 in _rt0_amd64_darwin ()
+(gdb) n
+Single stepping until exit from function _rt0_amd64_darwin,
+which has no line number information.
+0x0000000001051180 in _rt0_amd64 ()
+(gdb) n
+Single stepping until exit from function _rt0_amd64,
+which has no line number information.
+0x0000000001051190 in runtime.rt0_go ()
+(gdb) n
+Single stepping until exit from function runtime.rt0_go,
+which has no line number information.
+0x0000000001037d70 in runtime.check ()
+(gdb) n
+Single stepping until exit from function runtime.check,
+which has no line number information.
+0x0000000001038620 in runtime.timediv ()
+(gdb) n
+Single stepping until exit from function runtime.timediv,
+which has no line number information.
+0x0000000001037dd8 in runtime.check ()
+(gdb) n
+Single stepping until exit from function runtime.check,
+which has no line number information.
+0x0000000001051297 in runtime.rt0_go ()
+(gdb) n
+Single stepping until exit from function runtime.rt0_go,
+which has no line number information.
+0x00000000010326b0 in runtime.newproc ()
+(gdb) n
+Single stepping until exit from function runtime.newproc,
+which has no line number information.
+0x00000000010513d0 in runtime.systemstack ()
+(gdb) nn
+Undefined command: "nn".  Try "help".
+(gdb) n
+Single stepping until exit from function runtime.systemstack,
+which has no line number information.
+0x0000000001050c90 in runtime.newproc.func1 ()
+(gdb) n
+Single stepping until exit from function runtime.newproc.func1,
+which has no line number information.
+0x0000000001032730 in runtime.newproc1 ()
+(gdb) n
+Single stepping until exit from function runtime.newproc1,
+which has no line number information.
+0x0000000001033100 in runtime.gfget ()
+(gdb) n
+Single stepping until exit from function runtime.gfget,
+which has no line number information.
+0x00000000010327ad in runtime.newproc1 ()
+(gdb) n
+Single stepping until exit from function runtime.newproc1,
+which has no line number information.
+0x0000000001050cdf in runtime.newproc.func1 ()
+(gdb) n
+Single stepping until exit from function runtime.newproc.func1,
+which has no line number information.
+0x000000000103271e in runtime.newproc ()
+(gdb) n
+Single stepping until exit from function runtime.newproc,
+which has no line number information.
+0x00000000010512c6 in runtime.rt0_go ()
+(gdb) n
+Single stepping until exit from function runtime.rt0_go,
+which has no line number information.
+0x000000000102daf0 in runtime.mstart ()
+(gdb) n
+Single stepping until exit from function runtime.mstart,
+which has no line number information.
+0x000000000102db70 in runtime.mstart1 ()
+(gdb) n
+Single stepping until exit from function runtime.mstart1,
+which has no line number information.
+0x00000000010318a0 in runtime.save ()
+(gdb) n
+Single stepping until exit from function runtime.save,
+which has no line number information.
+0x000000000102dbc4 in runtime.mstart1 ()
+(gdb) n
+Single stepping until exit from function runtime.mstart1,
+which has no line number information.
+hello
+[Inferior 1 (process 57895) exited normally]
+(gdb) n
+The program is not being run.
+(gdb)

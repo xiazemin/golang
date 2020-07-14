@@ -1,0 +1,11 @@
+import cycle not allowed
+package main
+	imports fmt
+	imports errors
+	imports runtime
+	imports runtime/internal/atomic
+	imports unsafe
+	imports runtime
+
+环境问题直接build即可
+$ go build -o m main.go
